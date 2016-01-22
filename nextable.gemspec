@@ -15,8 +15,10 @@ Gem::Specification.new do |s|
   s.summary     = "Extends ActiveRecord::Base to implement #next_record and
                      #previous_record instance methods"
   s.description = <<-EOF
- ** NOT PRODUCTION READY ** Allows "walking" of a table of ActiveRecord records by implementing 
- #next_record and #previous_record.
+ ** NOT PRODUCTION READY ** 
+A plugin for Rails that enables 'walking' of ActiveRecord models by implementing
+next_record and #previous_record instance methods.
+Documentation: https://github.com/tkbrigham/nextable
 EOF
 
   s.files       = ["lib/nextable.rb"]
