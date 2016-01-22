@@ -26,7 +26,7 @@ class NextableTest < ActiveSupport::TestCase
   end
 
   class WithFieldParam < NextableTest
-    test "datetime_field_example_birthday" do
+    test "date_field_example_birthday" do
       @feb_1965, @feb_1942, @jan_1929 = create_three_users
 
       # next_record
@@ -84,7 +84,7 @@ class NextableTest < ActiveSupport::TestCase
       assert_equal @third.next_record(cycle: true), @first
     end
 
-    test "cycle_by_datetime_field_example_birthday" do
+    test "cycle_by_date_field_example_birthday" do
       @feb_1965, @feb_1942, @jan_1929 = create_three_users
 
       # final record of each direction
@@ -114,9 +114,44 @@ class NextableTest < ActiveSupport::TestCase
   end
 
   class WithFiltersParam < NextableTest
+    setup do
+      @first, @second, @third, @fourth, @fifth, @sixth, @seventh = create_seven_users
+    end
+
+    test "with_jun_2_1991_birthday" do
+      assert_equal @second.next_record(filters: { birthday: '1991-06-02' }), @third
+      assert_equal @fifth.next_record(filters: { birthday: '1991-06-02' }), nil
+    end
+
+    test "with_oct_26_1990_birthday" do
+      assert_equal @second.next_record(filters: { birthday: '1990-10-26' }), @fifth
+      assert_equal @fifth.next_record(filters: { birthday: '1990-10-26' }), @sixth
+
+      assert_equal @sixth.previous_record(filters: { birthday: '1990-10-26' }), @fifth
+      assert_equal @fifth.previous_record(filters: { birthday: '1990-10-26' }), nil
+
+      # with cycle
+      assert_equal @fifth.previous_record(cycle: true, filters: { birthday: '1990-10-26' }), @seventh
+      assert_equal @seventh.next_record(cycle: true, filters: { birthday: '1990-10-26' }), @fifth
+
+      # with field param
+      assert_equal @fifth.previous_record(field: 'name', filters: { birthday: '1990-10-26' }), @sixth
+      assert_equal @seventh.next_record(field: 'name', filters: { birthday: '1990-10-26' }), @sixth
+    end
   end
 
   private
+
+  def create_seven_users
+    first = User.create!(name: 'Gibbert', total_friends: 1, birthday: 'June 2, 1991')
+    second = User.create!(name: 'Fubart', total_friends: 1, birthday: 'June 2, 1991')
+    third = User.create!(name: 'Ebert', total_friends: 1, birthday: 'June 2, 1991')
+    fourth = User.create!(name: 'Dilbert', total_friends: 2, birthday: 'June 2, 1991')
+    fifth = User.create!(name: 'Cubert', total_friends: 2, birthday: 'October 26, 1990')
+    sixth = User.create!(name: 'Bertal', total_friends: 3, birthday: 'October 26, 1990')
+    seventh = User.create!(name: 'Albert', total_friends: 3, birthday: 'October 26, 1990')
+    return first, second, third, fourth, fifth, sixth, seventh
+  end
 
   def create_three_users
     first = User.create!(name: 'Malcom Little', total_friends: 6, birthday: 'February 21, 1965')
