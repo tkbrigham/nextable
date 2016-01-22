@@ -71,6 +71,13 @@ Simply add the following line in your Gemfile:
 Then run the following command from your terminal:
 `bundle install`
 
+#### Uninstall
+Navigate to the folder that contains the `nextable` directory and run:
+```
+rm -Rf nextable
+gem uninstall nextable
+```
+
 ## Run tests
 
 From the folder you want to contain the nextable folder, run:
