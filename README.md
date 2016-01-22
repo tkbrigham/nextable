@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/nextable.svg)](https://badge.fury.io/rb/nextable)
+
 # Nextable
 **WARNING**: Do Not Use In Production Applications!
 
