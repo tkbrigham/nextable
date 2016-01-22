@@ -130,7 +130,6 @@ module Nextable
   def downcase_if_string(obj)
     obj.tap { |o| o.downcase! if o.is_a?(String) }
   end
-
 end
 
 ActiveRecord::Base.send :include, Nextable
