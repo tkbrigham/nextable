@@ -1,5 +1,0 @@
-= Nextable
-
-** Warning: Do Not Use in Production Applications **
-
-This project uses MIT-LICENSE.
