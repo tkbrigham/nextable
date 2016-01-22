@@ -8,9 +8,11 @@ A plugin for Rails that enables 'walking' of ActiveRecord models by
 
 ## Why
 
-Every wanted to simply get surrounding records without pulling in pagination?
+Ever wanted to simply get surrounding records without pulling in pagination?
 Ever want the record with the next highest `hits` attribute? Or wanted the next
-record that had the same attribute as your current one? 
+record that had the same attribute as the current record? 
+
+Or all three?
 
 You can have it all.
 
@@ -92,9 +94,9 @@ cd nextable
 rake
 ```
 
-## Contribute?
+## Questions? Contributions?
 
-Suggestions welcome: thomas@thomasbrigham.me
+All are welcome: thomas@thomasbrigham.me
 
 ## License
 
