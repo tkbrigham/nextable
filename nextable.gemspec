@@ -15,18 +15,8 @@ Gem::Specification.new do |s|
   s.summary     = "Extends ActiveRecord::Base to implement #next_record and
                      #previous_record instance methods"
   s.description = <<-EOF
- Allows "walking" of a table of ActiveRecord records by implementing 
+ ** NOT PRODUCTION READY ** Allows "walking" of a table of ActiveRecord records by implementing 
  #next_record and #previous_record.
-
-Options:
-- field: [Defaults to 'id'] which field should be used to calculate order. If
-  two records have the same value for the specified field, records will be
-  sub-ordered by ID.
-- cycle: [Defaults to false] upon reaching last (or first) record in order,
-  determines whether or not it should return nil or cycle to beginning (or end)
-- filters: [Defaults to {}] a hash passed to self.class.where to determine
-  scope. This will break if the ActiveRecord object does not have all of the
-  keys that are passed into the hash.
 EOF
 
   s.files       = ["lib/nextable.rb"]
