@@ -71,6 +71,17 @@ Simply add the following line in your Gemfile:
 Then run the following command from your terminal:
 `bundle install`
 
+## Run tests
+
+From the folder you want to contain the nextable folder, run:
+```
+git clone git@github.com:tkbrigham/nextable.git
+```
+Once that completes:
+```
+cd nextable
+rake
+```
 
 ## Contribute?
 
