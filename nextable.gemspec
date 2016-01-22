@@ -12,10 +12,11 @@ Gem::Specification.new do |s|
   s.email       = "thomas@thomasbrigham.me"
   s.homepage    =  'http://rubygems.org/gems/nextable'
   s.license     = "MIT"
-  s.summary     = "Extends ActiveRecord::Base to supply #next_record and
-                     #previous record instance methods"
+  s.summary     = "Extends ActiveRecord::Base to implement #next_record and
+                     #previous_record instance methods"
   s.description = <<-EOF
- Allows "walking" of a table of ActiveRecord records by implementing  #next_record and #previous_record.
+ Allows "walking" of a table of ActiveRecord records by implementing 
+ #next_record and #previous_record.
 
 Options:
 - field: [Defaults to 'id'] which field should be used to calculate order. If
@@ -31,6 +32,6 @@ EOF
   s.files       = ["lib/nextable.rb"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 4.1.14"
-  s.add_development_dependency "sqlite3"
+  s.add_runtime_dependency 'rails', '~> 4.1', '>= 4.1.14'
+  s.add_development_dependency 'sqlite3', '~> 0'
 end
