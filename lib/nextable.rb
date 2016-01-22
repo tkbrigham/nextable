@@ -52,12 +52,28 @@ module Nextable
   end
 
   def with_greater_field
+    greater = if self.send(@field).is_a?(String)
+                string_greater_field 
+              else
+                non_string_greater_field
+              end
+    nil_if_blank(greater)
+  end
+
+  def string_greater_field
+    downcased = downcase_if_string(self.send(@field))
+    nil_if_blank(@scope.where("lower(#{@field}) > ?", downcased).
+                 order("lower(#{@field}) asc").order('id asc').first)
+  end
+
+  def non_string_greater_field
     nil_if_blank(@scope.where("#{@field} > ?", self.send(@field)).
                  order("#{@field} asc").order('id asc').first)
   end
 
   def first_of_field
     return nil unless @cycle
+    return @scope.order("lower(#{@field}) asc").first if @field.is_a?(String)
     @scope.order("#{@field} asc").first
   end
 
@@ -78,12 +94,28 @@ module Nextable
   end
 
   def with_lesser_field
-    nil_if_blank(@scope.where("#{@field} < ?", self.public_send(@field)).
+    lesser = if self.send(@field).is_a?(String)
+                string_lesser_field 
+              else
+                non_string_lesser_field
+              end
+    nil_if_blank(lesser)
+  end
+
+  def string_lesser_field
+    downcased = downcase_if_string(self.send(@field))
+    nil_if_blank(@scope.where("lower(#{@field}) < ?", downcased).
+                 order("lower(#{@field}) desc").order('id desc').first)
+  end
+
+  def non_string_lesser_field
+    nil_if_blank(@scope.where("#{@field} < ?", self.send(@field)).
                  order("#{@field} desc").order('id desc').first)
   end
 
   def last_of_field
     return nil unless @cycle
+    return @scope.order("lower(#{@field}) desc").first if @field.is_a?(String)
     @scope.order("#{@field} desc").first
   end
 
@@ -94,6 +126,11 @@ module Nextable
   def nil_if_blank(relation)
     relation.blank? ? nil : relation
   end
+
+  def downcase_if_string(obj)
+    obj.tap { |o| o.downcase! if o.is_a?(String) }
+  end
+
 end
 
 ActiveRecord::Base.send :include, Nextable
