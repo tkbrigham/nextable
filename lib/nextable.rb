@@ -73,7 +73,7 @@ module Nextable
 
   def first_of_field
     return nil unless @cycle
-    return @scope.order("lower(#{@field}) asc").first if @field.is_a?(String)
+    return @scope.order("lower(#{@field}) asc").first if self.send(@field).is_a?(String)
     @scope.order("#{@field} asc").first
   end
 
@@ -115,7 +115,7 @@ module Nextable
 
   def last_of_field
     return nil unless @cycle
-    return @scope.order("lower(#{@field}) desc").first if @field.is_a?(String)
+    return @scope.order("lower(#{@field}) desc").first if self.send(@field).is_a?(String)
     @scope.order("#{@field} desc").first
   end
 
