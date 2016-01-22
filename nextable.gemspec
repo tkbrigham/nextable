@@ -5,15 +5,15 @@ require "nextable/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "nextable"
+  s.name        = 'nextable'
   s.date        = '2016-01-21'
   s.version     = Nextable::VERSION
-  s.authors     = "Thomas Brigham"
-  s.email       = "thomas@thomasbrigham.me"
-  s.homepage    =  'http://rubygems.org/gems/nextable'
-  s.license     = "MIT"
-  s.summary     = "Extends ActiveRecord::Base to implement #next_record and
-                     #previous_record instance methods"
+  s.authors     = 'Thomas Brigham'
+  s.email       = 'thomas@thomasbrigham.me'
+  s.homepage    =  'https://github.com/tkbrigham/nextable'
+  s.license     = 'MIT'
+  s.summary     = 'Extends ActiveRecord::Base to implement #next_record and
+                     #previous_record instance methods'
   s.description = <<-EOF
  ** NOT PRODUCTION READY ** 
 A plugin for Rails that enables 'walking' of ActiveRecord models by implementing
