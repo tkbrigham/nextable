@@ -1,3 +1,5 @@
 = Nextable
 
-This project rocks and uses MIT-LICENSE.
+** Warning: Do Not Use in Production Applications **
+
+This project uses MIT-LICENSE.
