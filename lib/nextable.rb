@@ -10,16 +10,22 @@
 # - filters: [Defaults to {}] a hash passed to self.class.where to determine
 #   scope. This will break if the ActiveRecord object does not have all of the
 #   keys that are passed into the hash.
-#
+
+require 'nextable/db'
+
 module Nextable
+  include Nextable::DB
+
   def next_record(opts = {})
     initialize!(opts)
-    pick_next_record
+    return pick_next_record if @field == 'id'
+    pick_next_record_for_field
   end
 
   def previous_record(opts = {})
     initialize!(opts)
-    pick_previous_record
+    return pick_previous_record if @field == 'id'
+    pick_previous_record_for_field
   end
 
   private
@@ -40,41 +46,29 @@ module Nextable
   ####
 
   def pick_next_record
-    equal_field_with_greater_id || with_greater_field || first_of_field
+    @scope.where("id > ?", id).order(:id).first || 
+      (@scope.order(:id).first if @cycle)
+  end
+
+  def pick_next_record_for_field
+    field_is_nil_next_record || equal_field_with_greater_id || 
+      with_greater_field || first_of_field
+  end
+
+  def field_is_nil_next_record
+    db_field_is_nil_next_record
   end
 
   def equal_field_with_greater_id
-    return nil if @field == 'id'
-    nil_if_blank(
-      @scope.where("#{@field} = ? AND id > ?", self.send(@field), id).
-      order('id asc').first
-    )
+    db_equal_field_with_greater_id
   end
 
   def with_greater_field
-    greater = if self.send(@field).is_a?(String)
-                string_greater_field 
-              else
-                non_string_greater_field
-              end
-    nil_if_blank(greater)
-  end
-
-  def string_greater_field
-    downcased = downcase_if_string(self.send(@field))
-    nil_if_blank(@scope.where("lower(#{@field}) > ?", downcased).
-                 order("lower(#{@field}) asc").order('id asc').first)
-  end
-
-  def non_string_greater_field
-    nil_if_blank(@scope.where("#{@field} > ?", self.send(@field)).
-                 order("#{@field} asc").order('id asc').first)
+    db_with_greater_field
   end
 
   def first_of_field
-    return nil unless @cycle
-    return @scope.order("lower(#{@field}) asc").first if self.send(@field).is_a?(String)
-    @scope.order("#{@field} asc").first
+    db_first_of_field
   end
 
   ####
@@ -82,53 +76,29 @@ module Nextable
   ####
 
   def pick_previous_record
-    equal_field_with_lesser_id || with_lesser_field || last_of_field
+    @scope.where("id < ?", id).order(id: :desc).first || 
+      (@scope.order(id: :desc).first if @cycle)
+  end
+
+  def pick_previous_record_for_field
+    field_is_nil_prev_record || equal_field_with_lesser_id || 
+      with_lesser_field || last_of_field
+  end
+
+  def field_is_nil_prev_record
+    db_field_is_nil_prev_record
   end
 
   def equal_field_with_lesser_id
-    return nil if @field == 'id'
-    nil_if_blank(
-      @scope.where("#{@field} = ? AND id < ?", self.send(@field), id).
-      order('id desc').first
-    )
+    db_equal_field_with_lesser_id
   end
 
   def with_lesser_field
-    lesser = if self.send(@field).is_a?(String)
-                string_lesser_field 
-              else
-                non_string_lesser_field
-              end
-    nil_if_blank(lesser)
-  end
-
-  def string_lesser_field
-    downcased = downcase_if_string(self.send(@field))
-    nil_if_blank(@scope.where("lower(#{@field}) < ?", downcased).
-                 order("lower(#{@field}) desc").order('id desc').first)
-  end
-
-  def non_string_lesser_field
-    nil_if_blank(@scope.where("#{@field} < ?", self.send(@field)).
-                 order("#{@field} desc").order('id desc').first)
+    db_with_lesser_field
   end
 
   def last_of_field
-    return nil unless @cycle
-    return @scope.order("lower(#{@field}) desc").first if self.send(@field).is_a?(String)
-    @scope.order("#{@field} desc").first
-  end
-
-  ####
-  ## other
-  ####
-
-  def nil_if_blank(relation)
-    relation.blank? ? nil : relation
-  end
-
-  def downcase_if_string(obj)
-    obj.tap { |o| o.downcase! if o.is_a?(String) }
+    db_last_of_field
   end
 end
 
