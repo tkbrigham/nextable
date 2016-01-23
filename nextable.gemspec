@@ -21,9 +21,9 @@ next_record and #previous_record instance methods.
 Documentation: https://github.com/tkbrigham/nextable
 EOF
 
-  s.files       = ["lib/nextable.rb"]
+  s.files       = ["lib/nextable.rb", "lib/nextable/db.rb"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_runtime_dependency 'rails', '~> 4.1', '>= 4.1.14'
+  s.add_runtime_dependency 'rails', '>= 4.1.14'
   s.add_development_dependency 'sqlite3'
 end
