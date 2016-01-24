@@ -60,11 +60,11 @@ next = u.next_record(field: 'created_at')
 [9,7].each { |n| User.find(n).update!(name: "Abacus") }
 User.find(8).update!(name: "Zenith")
 User.all.collect { |u| [u.id, u.name] }
-  => [[7, "Fubart"], [8, "Zenith"], [9, "Fubart"]]
+  => [[7, "Abacus"], [8, "Zenith"], [9, "Abacus"]]
 u = User.find(7)
-  => #<User id: 7, name: "Fubart", ...>
-u.next_record(filters: { name: "Fubart" })
-  => #<User id: 9, name: "Fubart", ...>
+  => #<User id: 7, name: "Abacus", ...>
+u.next_record(filters: { name: "Abacus" })
+  => #<User id: 9, name: "Abacus", ...>
 ```
 
 ## Installation
