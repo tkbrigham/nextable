@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    nextable (0.0.5)
+    nextable (0.0.6)
       rails (>= 4.1.14)
 
 GEM
