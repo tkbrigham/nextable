@@ -94,6 +94,12 @@ cd nextable
 rake
 ```
 
+## Known issues
+
+* Comparison of datetime fields when only a date is entered
+* Flexibility of date, time, and datetime formats (ie "Feb 2, 1990" and
+  "1990-2-2" should both work)
+
 ## Questions? Contributions?
 
 All are welcome: thomas@thomasbrigham.me
