@@ -26,4 +26,5 @@ EOF
 
   s.add_runtime_dependency 'rails', '>= 4.1.14'
   s.add_development_dependency 'pg'
+  s.add_development_dependency 'mysql2', '~> 0.3.18'
 end

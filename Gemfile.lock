@@ -45,6 +45,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.99)
     minitest (5.8.4)
+    mysql2 (0.3.20)
     pg (0.18.4)
     pry (0.10.3)
       coderay (~> 1.1.0)
@@ -86,6 +87,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  mysql2 (~> 0.3.18)
   nextable!
   pg
   pry
