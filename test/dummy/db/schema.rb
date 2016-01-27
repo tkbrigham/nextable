@@ -16,7 +16,8 @@ ActiveRecord::Schema.define(version: 20160121233437) do
   create_table "users", force: true do |t|
     t.string   "name"
     t.integer  "total_friends"
-    t.date     "birthday"
+    t.date     "date_of_birth"
+    t.time     "time_of_birth"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

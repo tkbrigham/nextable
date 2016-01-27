@@ -159,4 +159,5 @@ class NextableTest < ActiveSupport::TestCase
     third = User.create!(name: 'MLK Junior', total_friends: 7, birthday: 'January 15, 1929')
     return first, second, third
   end
+
 end

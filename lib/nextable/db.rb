@@ -124,4 +124,8 @@ module Nextable::DB
   def field_is_string?
     self.class.columns_hash[@field].type == :string
   end
+
+  def field_is_date_or_time?
+    self.class.columns_hash[@field].type == :string
+  end
 end
