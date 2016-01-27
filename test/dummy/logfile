@@ -1,0 +1,49 @@
+postgres cannot access the server configuration file "/usr/local/pgsql/data/postgresql.conf": No such file or directory
+LOG:  database system was shut down at 2016-01-26 21:12:04 PST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  database "tkbrigham" does not exist
+FATAL:  database "tkbrigham" does not exist
+FATAL:  database "tkbrigham" does not exist
+ERROR:  unrecognized configuration parameter "databases"
+STATEMENT:  show databases;
+ERROR:  syntax error at or near "databases" at character 1
+STATEMENT:  databases;
+ERROR:  syntax error at or near "ls" at character 1
+STATEMENT:  ls
+	;
+ERROR:  unrecognized configuration parameter "tables"
+STATEMENT:  show tables;
+ERROR:  syntax error at or near ";" at character 5
+STATEMENT:  show;
+ERROR:  relation "users" does not exist at character 15
+STATEMENT:  select * from users;
+ERROR:  unrecognized configuration parameter "relations"
+STATEMENT:  show relations;
+ERROR:  unrecognized configuration parameter "users"
+STATEMENT:  show users;
+ERROR:  syntax error at or near "user" at character 6
+STATEMENT:  show user;
+ERROR:  syntax error at or near ";" at character 5
+STATEMENT:  show;
+ERROR:  syntax error at or near "exit" at character 1
+STATEMENT:  exit
+	;
+ERROR:  database "nextable-dev" already exists
+STATEMENT:  CREATE DATABASE "nextable-dev" ENCODING = 'unicode'
+ERROR:  database "nextable-test" already exists
+STATEMENT:  CREATE DATABASE "nextable-test" ENCODING = 'unicode'
+ERROR:  relation "users" does not exist at character 15
+STATEMENT:  select * from users;
+ERROR:  unrecognized configuration parameter "relation"
+STATEMENT:  show relation;
+ERROR:  unrecognized configuration parameter "relations"
+STATEMENT:  show relations;
+ERROR:  syntax error at or near "list" at character 1
+STATEMENT:  list
+	relations;
+ERROR:  invalid input syntax for type time: "12pm" at character 120
+STATEMENT:  SELECT "users".* FROM "users"  WHERE "users"."date_of_birth" = 'january 18 1988 12:00pm' AND "users"."time_of_birth" = '12pm'
+ERROR:  invalid input syntax for type time: "12" at character 120
+STATEMENT:  SELECT "users".* FROM "users"  WHERE "users"."date_of_birth" = 'january 18 1988 12:00pm' AND "users"."time_of_birth" = '12'
