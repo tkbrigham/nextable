@@ -4,7 +4,10 @@
 **WARNING**: Do Not Use In Production Applications!
 
 A plugin for Rails that enables 'walking' of ActiveRecord models by
- implementing #next_record and #previous_record instance methods.
+ implementing #next_record and #previous_record instance methods. 
+
+As of 2016-01-26, this plugin has been tested with:
+- Postgres 9.5
 
 ## Why
 
