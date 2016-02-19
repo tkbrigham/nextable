@@ -4,7 +4,7 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 #
-default_pg: &default_pg
+default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
@@ -12,35 +12,13 @@ default_pg: &default_pg
   username: tkbrigham
   password:
 
-default_mysql: &default_mysql
-  adapter: mysql2
-  encoding: utf8
-  username: root
-  password:
-
 development:
-  <<: *default_pg
+  <<: *default
   database: nextable-dev-pg
-
-development:
-  <<: *default_mysql
-  database: nextable-dev-mysql
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default_pg
+  <<: *default
   database: nextable-test-pg
-
-test:
-  <<: *default_mysql
-  database: nextable-test-mysql
-
-production:
-  <<: *default_pg
-  database: nextable-prod-pg
-
-production:
-  <<: *default_mysql
-  database: nextable-prod-mysql
