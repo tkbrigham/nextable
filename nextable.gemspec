@@ -6,7 +6,7 @@ require "nextable/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = 'nextable'
-  s.date        = '2016-01-21'
+  s.date        = '2016-02-18'
   s.version     = Nextable::VERSION
   s.authors     = 'Thomas Brigham'
   s.email       = 'thomas@thomasbrigham.me'
@@ -24,6 +24,6 @@ EOF
   s.files       = ["lib/nextable.rb", "lib/nextable/db.rb"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_runtime_dependency 'rails', '>= 4.1.14'
-  s.add_development_dependency 'pg'
+  s.add_runtime_dependency 'rails', '~> 4.1'
+  s.add_development_dependency 'pg', '~> 2.4'
 end
