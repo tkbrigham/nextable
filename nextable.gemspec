@@ -25,5 +25,5 @@ EOF
   s.test_files = Dir["test/**/*"]
 
   s.add_runtime_dependency 'rails', '>= 4.1.14'
-  s.add_development_dependency 'pg', '~> 2.4'
+  s.add_development_dependency 'pg', '>= 0.18.4'
 end

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    nextable (0.0.6)
+    nextable (0.0.9)
       rails (>= 4.1.14)
 
 GEM
@@ -87,7 +87,7 @@ PLATFORMS
 
 DEPENDENCIES
   nextable!
-  pg
+  pg (>= 0.18.4)
   pry
 
 BUNDLED WITH
