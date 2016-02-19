@@ -24,6 +24,6 @@ EOF
   s.files       = ["lib/nextable.rb", "lib/nextable/db.rb"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_runtime_dependency 'rails', '>= 4.1.14'
-  s.add_development_dependency 'pg', '>= 0.18.4'
+  s.add_runtime_dependency 'rails'
+  s.add_development_dependency 'pg'
 end
