@@ -2,55 +2,6 @@
 # realm of downcasing string fields.
 
 module Nextable::DB
-  ####
-  ## next_record methods
-  ####
-
-  def db_field_is_nil_next_record
-    if self.send(@field).nil?
-      db_next_nil || db_first_non_nil
-    end
-  end
-
-  def db_equal_field_with_greater_id
-    @scope.where(db_eq_field_greater_id_params).order(:id).first
-  end
-
-  def db_with_greater_field
-    @scope.where(db_greater_query, db_param).
-      order(by_field).order(:id).first
-  end
-
-  def db_first_of_field
-    return nil unless @cycle
-    @scope.order(by_field).order(:id).first
-  end
-
-  ####
-  ## previous_record methods
-  ####
-
-  def db_field_is_nil_prev_record
-    if self.send(@field).nil?
-      db_prev_nil || db_last_non_nil
-    end
-  end
-
-  def db_equal_field_with_lesser_id
-    @scope.where(db_eq_field_lesser_id_params).order(id: :desc).first
-  end
-
-  def db_with_lesser_field
-    @scope.where(db_lesser_query, db_param).
-      order(by_field_desc).order(id: :desc).first ||
-      @scope.where("#{@field} IS NULL").order(id: :desc).first
-  end
-
-  def db_last_of_field
-    return nil unless @cycle
-    @scope.order(by_field_desc).order(id: :desc).first
-  end
-
   private
 
   ####
@@ -91,7 +42,7 @@ module Nextable::DB
   def db_prev_nil
     @scope.where("#{@field} IS NULL AND id < ?", id).order(id: :desc).first
   end
-      
+
   def db_last_non_nil
     @scope.where("#{@field} IS NOT NULL").order(by_field_desc).first
   end
