@@ -1,27 +1,37 @@
 require 'test_helper'
 
 class NextableTest < ActiveSupport::TestCase
-  class Defaults < NextableTest
-    setup do
-      @first, @second, @third = create_three_users
-    end
+  class NextRecord < NextableTest
+    class Defaults < NextRecord
+      setup do
+        @first, @second, @third = create_three_users
+      end
 
-    test "next_record_fetches_user_with_ascending_id" do
-      assert_equal @first.next_record, @second
-      assert_equal @second.next_record, @third
-    end
+      test "next_record_fetches_user_with_ascending_id" do
+        assert_equal @first.next_record, @second
+        assert_equal @second.next_record, @third
+      end
 
-    test "previous_record_fetches_user_with_descending_id" do
-      assert_equal @second.previous_record, @first
-      assert_equal @third.previous_record, @second
+      test "last_user_next_record_returns_nil" do
+        assert_equal @third.next_record, nil
+      end
     end
+  end
 
-    test "last_user_next_record_returns_nil" do
-      assert_equal @third.next_record, nil
-    end
+  class PreviousRecord < NextableTest
+    class Defaults < PreviousRecord
+      setup do
+        @first, @second, @third = create_three_users
+      end
 
-    test "first_user_previous_record_returns_nil" do
-      assert_equal @first.previous_record, nil
+      test "previous_record_fetches_user_with_descending_id" do
+        assert_equal @second.previous_record, @first
+        assert_equal @third.previous_record, @second
+      end
+
+      test "first_user_previous_record_returns_nil" do
+        assert_equal @first.previous_record, nil
+      end
     end
   end
 
