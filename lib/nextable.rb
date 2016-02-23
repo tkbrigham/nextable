@@ -46,27 +46,31 @@ module Nextable
   end
 
   def pick_next_record_for_field
-    field_is_nil_next_record || equal_field_with_greater_id ||
-      with_greater_field || (first_of_field if @cycle)
+    field_is_nil_next || field_not_nil_next
   end
 
-  def field_is_nil_next_record
+  def field_is_nil_next
     if self.send(@field).nil?
-      db_next_nil || db_first_non_nil
+      next_nil || first_non_nil.order(by_field).first
     end
   end
 
-  def equal_field_with_greater_id
-    @scope.where(db_eq_field_greater_id_params).order(:id).first
+  def field_not_nil_next
+    rel = greater_ids.presence || greater_fields.presence ||
+      (first_of_field if @cycle).presence
+    rel.order(:id).first unless rel.nil?
   end
 
-  def with_greater_field
-    @scope.where(db_greater_query, db_param).
-      order(by_field).order(:id).first
+  def greater_ids
+    @scope.where(greater_id_params)
+  end
+
+  def greater_fields
+    @scope.where(greater_field_params).order(by_field)
   end
 
   def first_of_field
-    @scope.order(by_field).order(:id).first
+    @scope.order(by_field)
   end
 
   ####
@@ -79,28 +83,46 @@ module Nextable
   end
 
   def pick_previous_record_for_field
-    field_is_nil_prev_record || equal_field_with_lesser_id ||
-      with_lesser_field || (last_of_field if @cycle)
+    field_is_nil_prev || field_not_nil_prev
   end
 
-  def field_is_nil_prev_record
+  def field_is_nil_prev
     if self.send(@field).nil?
-      db_prev_nil || db_last_non_nil
+      prev_nil || last_non_nil.order(by_desc_field).first
     end
   end
 
-  def equal_field_with_lesser_id
-    @scope.where(db_eq_field_lesser_id_params).order(id: :desc).first
+  def field_not_nil_prev
+    rel = lesser_ids.presence || lesser_fields.presence ||
+      (last_of_field if @cycle).presence
+    rel.order(id: :desc).first unless rel.nil?
   end
 
-  def with_lesser_field
-    @scope.where(db_lesser_query, db_param).
-      order(by_field_desc).order(id: :desc).first ||
-      @scope.where("#{@field} IS NULL").order(id: :desc).first
+  def lesser_ids
+    @scope.where(lesser_id_params)
+  end
+
+  def lesser_fields
+    @scope.where(lesser_field_params).order(by_field_desc).presence ||
+      @scope.where("? IS NULL", @field).presence
   end
 
   def last_of_field
-    @scope.order(by_field_desc).order(id: :desc).first
+    @scope.order(by_field_desc)
+  end
+
+  private
+
+  ## Ordering helpers
+
+  def by_field
+    return "lower(#{@field}) asc" if field_is_string?
+    "#{@field} asc"
+  end
+
+  def by_field_desc
+    return "lower(#{@field}) desc" if field_is_string?
+    "#{@field} desc"
   end
 end
 
