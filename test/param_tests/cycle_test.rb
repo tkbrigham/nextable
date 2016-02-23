@@ -3,40 +3,52 @@ require 'nextable_test'
 
 module ParamTests
   class CycleTest < NextableTest
-    test "default_will_cycle_by_id" do
-      @first, @second, @third = create_three_users
+    class NextRecord < CycleTest
+      test "default will cycle by id" do
+        @first, @second, @third = create_three_users
+        assert_equal @third.next_record(cycle: true), @first
+      end
 
-      # final record of each direction
-      assert_equal @first.previous_record(cycle: true), @third
-      assert_equal @third.next_record(cycle: true), @first
+      test "date field" do
+        @feb_1965, @feb_1942, @jan_1929 = create_three_users
+        jan =  @feb_1965.next_record(field: 'date_of_birth', cycle: true)
+        assert_equal jan, @jan_1929
+      end
+
+      test "integer field" do
+        @six, @eight, @seven = create_three_users
+        six = @eight.next_record(cycle: true, field: 'total_friends')
+        assert_equal six, @six
+      end
+
+      test "string field" do
+        @malcolm, @huey, @mlk = create_three_users
+        assert_equal @mlk.next_record(cycle: true, field: 'name'), @huey
+      end
     end
 
-    test "cycle_by_date_field_example_date_of_birth" do
-      @feb_1965, @feb_1942, @jan_1929 = create_three_users
+    class PreviousRecord < CycleTest
+      test "default will cycle by id" do
+        @first, @second, @third = create_three_users
+        assert_equal @first.previous_record(cycle: true), @third
+      end
 
-      # final record of each direction
-      assert_equal @jan_1929.previous_record(
-        field: 'date_of_birth', cycle: true), @feb_1965
-        assert_equal @feb_1965.next_record(
-          field: 'date_of_birth', cycle: true), @jan_1929
-    end
+      test "date field" do
+        @feb_1965, @feb_1942, @jan_1929 = create_three_users
+        feb = @jan_1929.previous_record(field: 'date_of_birth', cycle: true)
+        assert_equal feb, @feb_1965
+      end
 
-    test "cycle_by_integer_field_example_total_friends" do
-      @six, @eight, @seven = create_three_users
+      test "integer field" do
+        @six, @eight, @seven = create_three_users
+        eight = @six.previous_record(cycle: true, field: 'total_friends')
+        assert_equal eight, @eight
+      end
 
-      # final record of each direction
-      assert_equal @six.previous_record(
-        cycle: true, field: 'total_friends'), @eight
-        assert_equal @eight.next_record(
-          cycle: true, field: 'total_friends'), @six
-    end
-
-    test "cycle_by_string_field_example_name" do
-      @malcolm, @huey, @mlk = create_three_users
-
-      # final record of each direction
-      assert_equal @mlk.next_record(cycle: true, field: 'name'), @huey
-      assert_equal @huey.previous_record(cycle: true, field: 'name'), @mlk
+      test "string field" do
+        @malcolm, @huey, @mlk = create_three_users
+        assert_equal @huey.previous_record(cycle: true, field: 'name'), @mlk
+      end
     end
   end
 end

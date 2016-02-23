@@ -7,9 +7,11 @@ module ParamTests
       @first, @second, @third, @fourth, @fifth, @sixth, @seventh = create_seven_users
     end
 
-    test "with_jun_2_1991_date_of_birth" do
-      assert_equal @second.next_record(filters: { date_of_birth: '1991-06-02' }), @third
-      assert_equal @fifth.next_record(filters: { date_of_birth: '1991-06-02' }), nil
+    class NextRecord < NextableTest
+      test "with_jun_2_1991_date_of_birth" do
+        assert_equal @second.next_record(filters: { date_of_birth: '1991-06-02' }), @third
+        assert_equal @fifth.next_record(filters: { date_of_birth: '1991-06-02' }), nil
+      end
     end
 
     test "with_oct_26_1990_date_of_birth" do
