@@ -42,9 +42,9 @@ class NextableTest < ActiveSupport::TestCase
     second = User.create!(name: 'Fubart', total_friends: 1, date_of_birth: 'June 2, 1991')
     third = User.create!(name: 'Ebert', total_friends: 1, date_of_birth: 'June 2, 1991')
     fourth = User.create!(name: 'Dilbert', total_friends: 2, date_of_birth: 'June 2, 1991')
-    fifth = User.create!(name: 'Cubert', total_friends: 2, date_of_birth: 'October 26, 1990')
-    sixth = User.create!(name: 'Bertal', total_friends: 3, date_of_birth: 'October 26, 1990')
-    seventh = User.create!(name: 'Albert', total_friends: 3, date_of_birth: 'October 26, 1990')
+    fifth = User.create!(name: 'Albert', total_friends: 3, date_of_birth: 'October 26, 1990')
+    sixth = User.create!(name: 'Albert', total_friends: 2, date_of_birth: 'October 26, 1990')
+    seventh = User.create!(name: 'Albert', total_friends: 1, date_of_birth: 'October 26, 1990')
     return first, second, third, fourth, fifth, sixth, seventh
   end
 
