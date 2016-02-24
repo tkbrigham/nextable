@@ -6,7 +6,7 @@ require "nextable/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = 'nextable'
-  s.date        = '2016-02-18'
+  s.date        = '2016-02-23'
   s.version     = Nextable::VERSION
   s.authors     = 'Thomas Brigham'
   s.email       = 'thomas@thomasbrigham.me'
